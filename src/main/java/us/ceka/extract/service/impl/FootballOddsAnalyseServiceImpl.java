@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import us.ceka.dao.FootballTierDao;
 import us.ceka.dao.FootballMatchDao;
 import us.ceka.dao.FootballOddsDao;
 import us.ceka.domain.Analytics;
 import us.ceka.domain.FootballMatch;
 import us.ceka.domain.FootballOdds;
+import us.ceka.domain.FootballTier;
 import us.ceka.dto.FootballMatchDto;
 import us.ceka.extract.service.FootballOddsAnalyseService;
 
@@ -23,11 +25,16 @@ public class FootballOddsAnalyseServiceImpl extends GenericServiceImpl implement
 	private FootballOddsDao footballOddsDao;
 	@Autowired
 	private FootballMatchDao footballMatchDao;
+	@Autowired
+	private FootballTierDao footballTierDao;
 
 	@Autowired
 	private FootballMatchDto footballMatchDto;
 	
 	public void executeAnalyseOdds() {
+		
+		//log.info("{}", footballTierDao.getByKey("熱刺"));
+	
 		for(FootballMatch match : footballMatchDao.getLatestMatch()) {
 			FootballOdds latestOdds = footballOddsDao.findRecentOddsRecord(match.getMatchId());
 			FootballOdds initialOdds = footballOddsDao.findInitialOddsRecord(match.getMatchId());
@@ -51,22 +58,24 @@ public class FootballOddsAnalyseServiceImpl extends GenericServiceImpl implement
 			int vsDraw = map.get("vsDraw") == null ? 0 : Integer.parseInt((String)map.get("vsDraw"));
 			int vsLose = map.get("vsLose") == null ? 0 : Integer.parseInt((String)map.get("vsLose"));
 			
-			if(latestOdds.getHomeRate().compareTo(new BigDecimal(Analytics.DOUBT_RATE.getValue())) > 0) {
-				if((vsWin + vsDraw) / (double) (vsWin + vsDraw + vsLose) > Analytics.HIGH_WIN_POSSIBILITY.getValue()) {
-					log.info("***[{} {}] Abnormal Home Rate {} ({},{} vs {}) with {}win, {}draw out of {}", 
-							match.getMatchDate(), match.getMatchDay(), latestOdds.getHomeRate(), match.getMatchId(), match.getHomeTeam(), match.getAwayTeam(), 
-							vsWin, vsDraw, vsWin + vsDraw + vsLose);
+			if(vsWin + vsDraw + vsLose > Analytics.MIN_REFERENCE_MATCHES.getValue()) {
+				if(latestOdds.getHomeRate().compareTo(new BigDecimal(Analytics.DOUBT_RATE.getValue())) > 0) {			
+					if((vsWin + vsDraw) / (double) (vsWin + vsDraw + vsLose) > Analytics.HIGH_WIN_POSSIBILITY.getValue()) {
+						log.info("***[{} {}] Abnormal Home Rate {} ({},{} vs {}) with {}win, {}draw out of {}", 
+								match.getMatchDate(), match.getMatchDay(), latestOdds.getHomeRate(), match.getMatchId(), match.getHomeTeam(), match.getAwayTeam(), 
+								vsWin, vsDraw, vsWin + vsDraw + vsLose);
+					}
+				}
+				if(latestOdds.getAwayRate().compareTo(new BigDecimal(Analytics.DOUBT_RATE.getValue())) > 0) {
+					if((vsLose + vsDraw) / (double) (vsWin + vsDraw + vsLose) > Analytics.HIGH_WIN_POSSIBILITY.getValue()) {
+						log.info("***[{} {}] Abnormal Away Rate {} ({},{} vs {}) with {}win, {}draw out of {}", 
+								match.getMatchDate(), match.getMatchDay(), latestOdds.getAwayRate(), match.getMatchId(), match.getHomeTeam(), match.getAwayTeam(), 
+								vsLose, vsDraw, vsWin + vsDraw + vsLose);
+					}
 				}
 			}
-			if(latestOdds.getAwayRate().compareTo(new BigDecimal(Analytics.DOUBT_RATE.getValue())) > 0) {
-				if((vsLose + vsDraw) / (double) (vsWin + vsDraw + vsLose) > Analytics.HIGH_WIN_POSSIBILITY.getValue()) {
-					log.info("***[{} {}] Abnormal Away Rate {} ({},{} vs {}) with {}win, {}draw out of {}", 
-							match.getMatchDate(), match.getMatchDay(), latestOdds.getAwayRate(), match.getMatchId(), match.getHomeTeam(), match.getAwayTeam(), 
-							vsLose, vsDraw, vsWin + vsDraw + vsLose);
-				}
-			}
-
 		}
+		
 	}
 	
 }

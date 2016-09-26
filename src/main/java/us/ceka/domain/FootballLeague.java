@@ -76,6 +76,6 @@ public enum FootballLeague {
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.name();
 	}
 }

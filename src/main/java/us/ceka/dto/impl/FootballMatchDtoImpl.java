@@ -57,6 +57,7 @@ public class FootballMatchDtoImpl extends AbstractDtoJsoupImpl<FootballMatch> im
 				propMap.put("matchDay", matchInfo.get(2));
 				propMap.put("matchNum", matchInfo.get(3));
 				propMap.put("status", FootballMatch.MATCH_STATUS.PENDING.getCode());
+				propMap.put("season", FootballMatch.MATCH_SEASON.CURRENT.getLabel());
 				FootballMatch footballMatch = new FootballMatch(matchInfo.get(0));
 				try {
 					BeanUtils.populate(footballMatch, propMap);
@@ -166,8 +167,7 @@ public class FootballMatchDtoImpl extends AbstractDtoJsoupImpl<FootballMatch> im
 				propertiesMap.put("matchDate", matchDate);
 				propertiesMap.put("matchDay", StringUtils.upperCase(matchDate.format(DateTimeFormatter.ofPattern("EEE"))));
 				List<String> result = RegexUtil.findSingleGroupList("(\\d+):(\\d+)\\((\\d+):(\\d+)\\)", matchElt.child(5).text());
-				propertiesMap.put("result", FootballMatch.MATCH_RESULT.getByLabel(matchElt.child(3).text()).getCode());
-				//propertiesMap.put("matchId", String.format("A%s-%s", matchDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")), StringUtils.leftPad(team.getId(), 5, "0")));
+				//propertiesMap.put("result", FootballMatch.MATCH_RESULT.getByLabel(matchElt.child(3).text()).getCode());
 				propertiesMap.put("status", FootballMatch.MATCH_STATUS.COMPLETED.getCode());
 				propertiesMap.put("dateUpdated", LocalDateTime.now());
 				
@@ -189,7 +189,7 @@ public class FootballMatchDtoImpl extends AbstractDtoJsoupImpl<FootballMatch> im
 						propertiesMap.put("homeHalfScore", result.get(3));
 						propertiesMap.put("awayHalfScore", result.get(2));
 					}
-				}			
+				}
 				FootballMatch match = new FootballMatch();
 				try {
 					BeanUtils.populate(match, propertiesMap);

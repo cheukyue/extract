@@ -24,6 +24,7 @@
 		<slf4j-api.version>1.7.7</slf4j-api.version>
 		<httpclient.version>4.5.1</httpclient.version>
 		<beanutils.version>1.9.2</beanutils.version>
+		<lang3.version>3.4</lang3.version>
 		<jsoup.version>1.9.2</jsoup.version>
 
 		<jdk.version>1.8</jdk.version>
@@ -120,7 +121,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<version>${lang3.version}</version>
 		</dependency>
 		<!-- SLF4J - API -->
 		<dependency>

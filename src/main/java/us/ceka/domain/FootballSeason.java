@@ -1,6 +1,7 @@
 package us.ceka.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -29,6 +30,12 @@ public class FootballSeason extends AbstractObject<FootballSeason> implements Se
 	
 	@Column(name="LEAGUE_NAME")
 	private String leagueName;
+	
+	@Column(name="START")
+	private LocalDateTime start;
+	
+	@Column(name="END")
+	private LocalDateTime end;
 	
 	public FootballSeason() {}
 
@@ -62,5 +69,21 @@ public class FootballSeason extends AbstractObject<FootballSeason> implements Se
 
 	public void setLeagueName(String leagueName) {
 		this.leagueName = leagueName;
+	}
+
+	public LocalDateTime getStart() {
+		return start;
+	}
+
+	public void setStart(LocalDateTime start) {
+		this.start = start;
+	}
+
+	public LocalDateTime getEnd() {
+		return end;
+	}
+
+	public void setEnd(LocalDateTime end) {
+		this.end = end;
 	}
 }

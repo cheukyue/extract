@@ -48,6 +48,13 @@ public class FootballMatch extends AbstractObject<FootballMatch> implements Seri
 		private MATCH_AT(String label) {this.label =  label;}
 		public String getLabel() {return label;}
 	}
+	
+	public enum MATCH_SEASON {
+		CURRENT("今季");
+		private String label;
+		private MATCH_SEASON(String label){this.label =  label;}
+		public String getLabel() {return label;}
+	}
 
 	@Id
 	@Column(name="MATCH_ID", nullable=false)
@@ -87,7 +94,10 @@ public class FootballMatch extends AbstractObject<FootballMatch> implements Seri
 	@Column(name="AWAY_HALF_SCORE")
 	private int awayHalfScore;
 	
-	@Column(name="status")
+	@Column(name="SEASON")
+	private String season;
+	
+	@Column(name="STATUS")
 	private String status;
 	
 	@Column (name="DATE_UPDATED")
@@ -211,6 +221,14 @@ public class FootballMatch extends AbstractObject<FootballMatch> implements Seri
 		this.dateUpdated = dateUpdated;
 	}
 	
+	public String getSeason() {
+		return season;
+	}
+
+	public void setSeason(String season) {
+		this.season = season;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
