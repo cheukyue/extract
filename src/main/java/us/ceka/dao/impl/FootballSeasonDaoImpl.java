@@ -32,6 +32,44 @@ public class FootballSeasonDaoImpl extends AbstractDaoImpl<String, FootballSeaso
 		return q.getResultList();
 	}
 	
-	
+	/*
+update football_season set start = '2016-08-01 00:00:00', end = '2017-05-30 00:00:00' where league_name = '英超' and season = '今季';
+update football_season set start = '2015-08-01 00:00:00', end = '2016-05-30 00:00:00' where league_name = '英超' and season = '2015-2016';
+update football_season set start = '2014-08-01 00:00:00', end = '2015-05-30 00:00:00' where league_name = '英超' and season = '2014-2015';
+update football_season set start = '2013-08-01 00:00:00', end = '2014-05-30 00:00:00' where league_name = '英超' and season = '2013-2014';
+update football_season set start = '2012-08-01 00:00:00', end = '2013-05-30 00:00:00' where league_name = '英超' and season = '2012-2013';
+
+update football_season set start = '2016-08-01 00:00:00', end = '2017-05-30 00:00:00' where league_name = '意甲' and season = '今季';
+update football_season set start = '2015-08-01 00:00:00', end = '2016-05-30 00:00:00' where league_name = '意甲' and season = '2015-2016';
+update football_season set start = '2014-08-01 00:00:00', end = '2015-05-30 00:00:00' where league_name = '意甲' and season = '2014-2015';
+update football_season set start = '2013-08-01 00:00:00', end = '2014-05-30 00:00:00' where league_name = '意甲' and season = '2013-2014';
+update football_season set start = '2012-08-01 00:00:00', end = '2013-05-30 00:00:00' where league_name = '意甲' and season = '2012-2013';
+
+update football_season set start = '2016-08-01 00:00:00', end = '2017-05-30 00:00:00' where league_name = '意甲' and season = '今季';
+update football_season set start = '2015-08-01 00:00:00', end = '2016-05-30 00:00:00' where league_name = '意甲' and season = '2015-2016';
+update football_season set start = '2014-08-01 00:00:00', end = '2015-05-30 00:00:00' where league_name = '意甲' and season = '2014-2015';
+update football_season set start = '2013-08-01 00:00:00', end = '2014-05-30 00:00:00' where league_name = '意甲' and season = '2013-2014';
+update football_season set start = '2012-08-01 00:00:00', end = '2013-05-30 00:00:00' where league_name = '意甲' and season = '2012-2013';
+
+update football_season set start = '2016-08-01 00:00:00', end = '2017-05-30 00:00:00' where league_name = '德甲' and season = '今季';
+update football_season set start = '2015-08-01 00:00:00', end = '2016-05-30 00:00:00' where league_name = '德甲' and season = '2015-2016';
+update football_season set start = '2014-08-01 00:00:00', end = '2015-05-30 00:00:00' where league_name = '德甲' and season = '2014-2015';
+update football_season set start = '2013-08-01 00:00:00', end = '2014-05-30 00:00:00' where league_name = '德甲' and season = '2013-2014';
+update football_season set start = '2012-08-01 00:00:00', end = '2013-05-30 00:00:00' where league_name = '德甲' and season = '2012-2013';
+
+update football_season set start = '2016-08-01 00:00:00', end = '2017-05-30 00:00:00' where league_name = '西甲' and season = '今季';
+update football_season set start = '2015-08-01 00:00:00', end = '2016-05-30 00:00:00' where league_name = '西甲' and season = '2015-2016';
+update football_season set start = '2014-08-01 00:00:00', end = '2015-05-30 00:00:00' where league_name = '西甲' and season = '2014-2015';
+update football_season set start = '2013-08-01 00:00:00', end = '2014-05-30 00:00:00' where league_name = '西甲' and season = '2013-2014';
+update football_season set start = '2012-08-01 00:00:00', end = '2013-05-30 00:00:00' where league_name = '西甲' and season = '2012-2013';
+
+update football_season set start = '2016-07-01 00:00:00', end = '2016-12-31 00:00:00' where league_name = '日聯' and season = '今季';
+update football_season set start = '2016-02-01 00:00:00', end = '2016-06-30 00:00:00' where league_name = '日聯' and season = '2016-Stage 1';
+update football_season set start = '2015-07-01 00:00:00', end = '2015-12-31 00:00:00' where league_name = '日聯' and season = '2015-Stage 2';
+update football_season set start = '2015-02-01 00:00:00', end = '2015-06-30 00:00:00' where league_name = '日聯' and season = '2015-Stage 1';
+update football_season set start = '2014-02-01 00:00:00', end = '2014-12-30 00:00:00' where league_name = '日聯' and season = '2014';
+update football_season set start = '2013-02-01 00:00:00', end = '2013-12-30 00:00:00' where league_name = '日聯' and season = '2013';
+*/
+	 
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import us.ceka.dao.FootballMatchDao;
 import us.ceka.domain.FootballMatch;
+import us.ceka.domain.FootballTeamMatchup;
 
 @Repository("footballMatchDao")
 public class FootballMatchDaoImpl extends AbstractDaoImpl<String, FootballMatch> implements FootballMatchDao{
@@ -36,6 +37,19 @@ public class FootballMatchDaoImpl extends AbstractDaoImpl<String, FootballMatch>
 		q.setParameter("start", matchDate.truncatedTo(ChronoUnit.DAYS));
 		q.setParameter("end", matchDate.truncatedTo(ChronoUnit.DAYS).plusDays(1));
 		return q.getResultList().isEmpty() ? null : (FootballMatch)q.getSingleResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<FootballTeamMatchup> getMatchup(String team, String league, FootballMatch.MATCH_AT matchAt) {
+		if(matchAt == null) return null;
+		String namedQuery = null;
+		switch(matchAt) {
+			case HOME: namedQuery = "home_team_matchup"; break;
+			case AWAY: namedQuery = "away_team_matchup"; break;
+			case NEUTRAL: return null;
+		}
+		Query q = getSession().createNamedQuery(namedQuery).setParameter("team", team).setParameter("league", league);
+		return q.getResultList();
 	}
 	
 }

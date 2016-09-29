@@ -32,4 +32,24 @@ public class FootballOddsId extends AbstractObject<FootballOddsId> implements Se
 	public void setBatch(String batch) {
 		this.batch = batch;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(obj == null) return false;
+		if(! (obj instanceof FootballOddsId)) return false;
+		FootballOddsId id = (FootballOddsId)obj;
+		if(id.getMatchId() == null  || id.getBatch() == null) return false;
+		if(!id.getMatchId().equals(matchId)) return false;
+		if(!id.getBatch().equals(batch)) return false;
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hashCode = 1;
+		if(matchId != null) hashCode = 31 * hashCode + matchId.hashCode();
+		if(batch != null) hashCode = 31 * hashCode + batch.hashCode();
+		return hashCode;
+	}
 }

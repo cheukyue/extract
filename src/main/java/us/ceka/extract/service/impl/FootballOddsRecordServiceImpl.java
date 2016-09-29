@@ -102,12 +102,8 @@ public class FootballOddsRecordServiceImpl extends GenericServiceImpl implements
 	}
 	
 	public void executeUpdateTeamMatches() {
-		//List<FootballLeague> leagueList = new java.util.ArrayList<FootballLeague>();
-		//leagueList.add(FootballLeague.ENG_PREMIER_LEAGUE);
-		//leagueList.add(FootballLeague.GER_BUNDESLIGA);
-		//leagueList.add(FootballLeague.ESP_LALIGA);
-		//leagueList.add(FootballLeague.ITA_SERIE_A);
-		//leagueList.add(FootballLeague.JPN_JLEAGUE);
+		//List<FootballLeague> leagueList = new ArrayList<FootballLeague>();
+		//leagueList.add(FootballLeague.ARG_DIVISION_1);
 		//for(FootballLeague league : leagueList) {
 		for(FootballLeague league : FootballLeague.values()) {
 			if(league.getType().equals(FootballLeague.TYPE.LEAGUE)) {
@@ -126,12 +122,6 @@ public class FootballOddsRecordServiceImpl extends GenericServiceImpl implements
 												StringUtils.leftPad(awayTeam.getId(), 5, "0")
 								);
 								match.setMatchId(matchId);
-								int result = NumberUtils.compare(match.getHomeScore(), match.getAwayScore());
-								match.setResult(result > 0 ? 
-										FootballMatch.MATCH_RESULT.WIN.getCode() : result == 0 ? 
-												FootballMatch.MATCH_RESULT.DRAW.getCode() : FootballMatch.MATCH_RESULT.LOSE.getCode());
-								match.setSeason(season.getSeason());
-								
 								if(!match.equals(footballMatchDao.getMatch(match.getHomeTeam(), match.getAwayTeam(), match.getMatchDate()))) {
 									log.info("Insert football match:{}", match);
 									footballMatchDao.persist(match);
