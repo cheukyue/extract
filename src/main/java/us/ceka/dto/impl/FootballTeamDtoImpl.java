@@ -16,7 +16,7 @@ import us.ceka.domain.FootballMatch;
 import us.ceka.domain.FootballSeason;
 import us.ceka.domain.FootballTeam;
 import us.ceka.dto.FootballTeamDto;
-import us.ceka.extract.util.RegexUtil;
+import us.ceka.util.RegexUtil;
 
 @Repository("footballTeamDto")
 public class FootballTeamDtoImpl extends AbstractDtoJsoupImpl<FootballTeam> implements FootballTeamDto{

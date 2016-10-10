@@ -1,4 +1,4 @@
-package us.ceka.extract.service.impl;
+package us.ceka.service.impl;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import us.ceka.domain.FootballSeason;
 import us.ceka.domain.FootballTeam;
 import us.ceka.dto.FootballLeagueDto;
 import us.ceka.dto.FootballTeamDto;
-import us.ceka.extract.service.MaintenanceService;
+import us.ceka.service.MaintenanceService;
 
 @Service("maintenanceService")
 @Transactional

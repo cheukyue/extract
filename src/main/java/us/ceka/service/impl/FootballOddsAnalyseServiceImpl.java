@@ -1,8 +1,7 @@
-package us.ceka.extract.service.impl;
+package us.ceka.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,11 +19,10 @@ import us.ceka.domain.Analytics;
 import us.ceka.domain.FootballLeague;
 import us.ceka.domain.FootballMatch;
 import us.ceka.domain.FootballOdds;
-import us.ceka.domain.FootballTeamMatchup;
-import us.ceka.domain.FootballTier;
+import us.ceka.domain.FootballMatchup;
 import us.ceka.domain.KeysObject;
 import us.ceka.dto.FootballMatchDto;
-import us.ceka.extract.service.FootballOddsAnalyseService;
+import us.ceka.service.FootballOddsAnalyseService;
 
 @Service("footballOddsAnalyseService")
 @Transactional
@@ -33,8 +31,6 @@ public class FootballOddsAnalyseServiceImpl extends GenericServiceImpl implement
 	private FootballOddsDao footballOddsDao;
 	@Autowired
 	private FootballMatchDao footballMatchDao;
-	@Autowired
-	private FootballTierDao footballTierDao;
 
 	@Autowired
 	private FootballMatchDto footballMatchDto;
@@ -94,12 +90,39 @@ public class FootballOddsAnalyseServiceImpl extends GenericServiceImpl implement
 	}
 	
 	private void executeAnalyseMatchup(String homeTeam, String awayTeam, FootballLeague league) {
-		List<FootballTeamMatchup> homeMatchups = footballMatchDao.getMatchup(homeTeam, league.toString(), FootballMatch.MATCH_AT.HOME);
-		//Map<String, Integer> seasonTotalMatches = homeMatchups.stream().collect(Collectors.groupingBy(FootballTeamMatchup::getSeason, Collectors.summingInt(FootballTeamMatchup::getNumMatches)));
-	//	Map<KeysObject, List<FootballTeamMatchup>> map = homeMatchups.stream().collect(Collectors.groupingBy(m -> new KeysObject(m.getSeason(), m.getVsTier()), 
-		//		Collectors.mapping((FootballTeamMatchup m) -> m, Collectors.toList())));
-		/*		
-		Map<KeysObject, List<FootballTeamMatchup>> sortedMap = new TreeMap<KeysObject, List<FootballTeamMatchup>>(
+		List<FootballMatchup> homeMatchups = footballMatchDao.getMatchup(homeTeam, league.toString(), FootballMatch.MATCH_AT.HOME);
+
+		Map<KeysObject, Integer> homeMatchesInSeason = homeMatchups.stream().collect(Collectors.groupingBy(m -> new KeysObject(m.getSeason(), m.getVsTier()), 
+				Collectors.summingInt(FootballMatchup::getNumMatches)));
+
+		for(FootballMatchup matchup : homeMatchups) {
+			double rate = matchup.getNumMatches() / (double) homeMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier()));
+			log.info("{} H:{} A:{} {} {}:{} total:{} Rate:{} vs:{}", matchup.getTeam(), matchup.getTeamTier(), matchup.getVsTier(), 
+					String.format("%-10s", matchup.getSeason()), matchup.getResult(), 
+					matchup.getNumMatches(), homeMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier())), rate, matchup.getVsTeamList());
+		}
+		
+		List<FootballMatchup> awayMatchups = footballMatchDao.getMatchup(awayTeam, league.toString(), FootballMatch.MATCH_AT.AWAY);
+		Map<KeysObject, Integer> awayMatchesInSeason = awayMatchups.stream().collect(Collectors.groupingBy(m -> new KeysObject(m.getSeason(), m.getVsTier()), 
+				Collectors.summingInt(FootballMatchup::getNumMatches)));
+		
+		for(FootballMatchup matchup : awayMatchups) {
+			double rate = matchup.getNumMatches() / (double) awayMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier()));
+			log.info("{} H:{} A:{} {} {}:{} total:{} Rate:{} vs:{}", matchup.getTeam(), matchup.getTeamTier(), matchup.getVsTier(), 
+					String.format("%-10s", matchup.getSeason()), matchup.getResult(), 
+					matchup.getNumMatches(), awayMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier())), rate, matchup.getVsTeamList());
+		}
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private void dummyExecuteAnalyseMatchup(String homeTeam, String awayTeam, FootballLeague league) {
+		List<FootballMatchup> homeMatchups = footballMatchDao.getMatchup(homeTeam, league.toString(), FootballMatch.MATCH_AT.HOME);
+		//Map<String, Integer> seasonTotalMatches = homeMatchups.stream().collect(Collectors.groupingBy(FootballMatchup::getSeason, Collectors.summingInt(FootballMatchup::getNumMatches)));
+		Map<KeysObject, List<FootballMatchup>> map = homeMatchups.stream().collect(Collectors.groupingBy(m -> new KeysObject(m.getSeason(), m.getVsTier()), 
+				Collectors.mapping((FootballMatchup m) -> m, Collectors.toList())));
+				
+		Map<KeysObject, List<FootballMatchup>> sortedMap = new TreeMap<KeysObject, List<FootballMatchup>>(
 				new Comparator<KeysObject>() {
 					@Override
 					public int compare(KeysObject key1, KeysObject key2) {
@@ -112,28 +135,5 @@ public class FootballOddsAnalyseServiceImpl extends GenericServiceImpl implement
 			); 
 		sortedMap.putAll(map);
 		log.info("{}", sortedMap);
-*/
-		Map<KeysObject, Integer> homeMatchesInSeason = homeMatchups.stream().collect(Collectors.groupingBy(m -> new KeysObject(m.getSeason(), m.getVsTier()), 
-				Collectors.summingInt(FootballTeamMatchup::getNumMatches)));
-
-		for(FootballTeamMatchup matchup : homeMatchups) {
-			double rate = matchup.getNumMatches() / (double) homeMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier()));
-			log.info("{} H:{} A:{} {} {}:{} total:{} Rate:{}", matchup.getTeam(), matchup.getTeamTier(), matchup.getVsTier(), 
-					String.format("%-10s", matchup.getSeason()), matchup.getResult(), 
-					matchup.getNumMatches(), homeMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier())), rate);
-		}
-		
-		List<FootballTeamMatchup> awayMatchups = footballMatchDao.getMatchup(awayTeam, league.toString(), FootballMatch.MATCH_AT.AWAY);
-		Map<KeysObject, Integer> awayMatchesInSeason = awayMatchups.stream().collect(Collectors.groupingBy(m -> new KeysObject(m.getSeason(), m.getVsTier()), 
-				Collectors.summingInt(FootballTeamMatchup::getNumMatches)));
-		
-		for(FootballTeamMatchup matchup : awayMatchups) {
-			double rate = matchup.getNumMatches() / (double) awayMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier()));
-			log.info("{} H:{} A:{} {} {}:{} total:{} Rate:{}", matchup.getTeam(), matchup.getTeamTier(), matchup.getVsTier(), 
-					String.format("%-10s", matchup.getSeason()), matchup.getResult(), 
-					matchup.getNumMatches(), awayMatchesInSeason.get(new KeysObject(matchup.getSeason(), matchup.getVsTier())), rate);
-		}
-		
 	}
-	
 }

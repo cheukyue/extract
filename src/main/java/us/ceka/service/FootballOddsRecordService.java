@@ -1,4 +1,4 @@
-package us.ceka.extract.service;
+package us.ceka.service;
 
 
 public interface FootballOddsRecordService extends GenericService {

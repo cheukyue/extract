@@ -7,14 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import us.ceka.extract.config.AppConfig;
-import us.ceka.extract.service.FootballOddsAnalyseService;
-import us.ceka.extract.service.FootballOddsRecordService;
-import us.ceka.extract.service.MaintenanceService;
+import us.ceka.service.FootballOddsAnalyseService;
+import us.ceka.service.FootballOddsRecordService;
+import us.ceka.service.MaintenanceService;
 
-/**
- * 
- *
- */
 public class App 
 {
 	private static final Logger log = LoggerFactory.getLogger(App.class);

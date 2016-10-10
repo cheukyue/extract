@@ -1,4 +1,4 @@
-package us.ceka.extract.util;
+package us.ceka.util;
 
 import java.util.ArrayList;
 import java.util.List;

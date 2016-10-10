@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import us.ceka.dao.FootballMatchDao;
 import us.ceka.domain.FootballMatch;
-import us.ceka.domain.FootballTeamMatchup;
+import us.ceka.domain.FootballMatchup;
 
 @Repository("footballMatchDao")
 public class FootballMatchDaoImpl extends AbstractDaoImpl<String, FootballMatch> implements FootballMatchDao{
@@ -40,7 +40,7 @@ public class FootballMatchDaoImpl extends AbstractDaoImpl<String, FootballMatch>
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<FootballTeamMatchup> getMatchup(String team, String league, FootballMatch.MATCH_AT matchAt) {
+	public List<FootballMatchup> getMatchup(String team, String league, FootballMatch.MATCH_AT matchAt) {
 		if(matchAt == null) return null;
 		String namedQuery = null;
 		switch(matchAt) {

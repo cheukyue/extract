@@ -14,7 +14,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.MutablePropertySources;
 
-import us.ceka.extract.util.JsoupTemplate;
+import us.ceka.util.JsoupTemplate;
 
 @Configuration 
 @ComponentScan(basePackages = "us.ceka")

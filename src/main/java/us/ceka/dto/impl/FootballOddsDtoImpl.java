@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import us.ceka.domain.FootballOdds;
 import us.ceka.dto.FootballOddsDto;
-import us.ceka.extract.util.RegexUtil;
+import us.ceka.util.RegexUtil;
 
 @Repository("footballOddsDto")
 public class FootballOddsDtoImpl extends AbstractDtoJsoupImpl<FootballOdds> implements FootballOddsDto{

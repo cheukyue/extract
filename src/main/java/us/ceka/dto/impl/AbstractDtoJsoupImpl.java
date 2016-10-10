@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import us.ceka.dto.AbstractDto;
-import us.ceka.extract.util.JsoupTemplate;
+import us.ceka.util.JsoupTemplate;
 
 
 public class AbstractDtoJsoupImpl<T> implements AbstractDto<T>{

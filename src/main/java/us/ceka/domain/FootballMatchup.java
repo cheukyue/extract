@@ -10,23 +10,23 @@ import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 
-import us.ceka.extract.util.StringListConverter;
+import us.ceka.util.StringListConverter;
 
 @Entity
 @NamedNativeQueries( {
 	@NamedNativeQuery(       
 		    name = "home_team_matchup",
 		    query = "CALL home_team_matchup(:team, :league)",
-		    resultClass = FootballTeamMatchup.class
+		    resultClass = FootballMatchup.class
 	),
 	@NamedNativeQuery(       
 		    name = "away_team_matchup",
 		    query = "CALL away_team_matchup(:team, :league)",
-		    resultClass = FootballTeamMatchup.class
+		    resultClass = FootballMatchup.class
 	)
 })
 
-public class FootballTeamMatchup extends AbstractObject<FootballTeamMatchup> implements Serializable{
+public class FootballMatchup extends AbstractObject<FootballMatchup> implements Serializable{
 
 	private static final long serialVersionUID = -7488070164437616687L;
 	
@@ -114,6 +114,31 @@ public class FootballTeamMatchup extends AbstractObject<FootballTeamMatchup> imp
 	}
 	public void setGoalAgainstList(List<String> goalAgainstList) {
 		this.goalAgainstList = goalAgainstList;
+	}
+	
+	public int hashCode() {
+		int hashCode = 1;
+		if(team != null)  hashCode = 31 * hashCode + team.hashCode();
+		if(season != null)  hashCode = 31 * hashCode + season.hashCode();
+		hashCode = 31 * hashCode + teamTier;
+		hashCode = 31 * hashCode + vsTier;
+		hashCode = 31 * hashCode + result;
+		
+		return hashCode;
+	}
+	
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(obj == null) return false;
+		if(!(obj instanceof FootballMatchup)) return false;
+		FootballMatchup matchup = (FootballMatchup) obj;
+		if(team == null || season == null) return false;
+		if(!team.equals(team)) return false;
+		if(!team.equals(season)) return false;
+		if(teamTier != matchup.getTeamTier()) return false;
+		if(vsTier != matchup.getVsTier()) return false;
+		if(result != matchup.getResult()) return false;
+		return true;
 	}
 
 }

@@ -1,4 +1,4 @@
-package us.ceka.extract.service.impl;
+package us.ceka.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
@@ -27,7 +27,7 @@ import us.ceka.dto.FootballLeagueDto;
 import us.ceka.dto.FootballMatchDto;
 import us.ceka.dto.FootballOddsDto;
 import us.ceka.dto.FootballTeamDto;
-import us.ceka.extract.service.FootballOddsRecordService;
+import us.ceka.service.FootballOddsRecordService;
 
 @Service("footballOddsRecordService")
 @Transactional

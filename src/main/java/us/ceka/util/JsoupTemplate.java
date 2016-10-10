@@ -1,4 +1,4 @@
-package us.ceka.extract.util;
+package us.ceka.util;
 
 import java.io.IOException;
 import java.net.Authenticator;

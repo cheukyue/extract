@@ -1,6 +1,5 @@
-package us.ceka.extract.util;
+package us.ceka.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,9 +15,6 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
 	@Override
 	public List<String> convertToEntityAttribute(String data) {
-		return new ArrayList<>(Arrays.asList(data.split(",")));
+		return Arrays.asList(data.split(","));
 	}
-
-
-
 }
